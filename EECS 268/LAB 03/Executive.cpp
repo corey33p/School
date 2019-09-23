@@ -1,3 +1,12 @@
+/*
+@author - Cory Anderson
+@file - Executive.cpp
+@date - 9/23/2019
+@brief - This will serve as a parent object, which will import data from
+a file and create the ShapeContainer data structure, which will handle all the
+individual shapes.
+*/
+
 using namespace std;
 #include <vector>
 #include <iostream>
@@ -49,10 +58,9 @@ void Executive::parseData(vector<string> txtFileLines){
     stringstream ss4(numberOfLines_in);
     int numberOfLines;
     ss4>> numberOfLines;
-    // cout<<"numberOfLines: "<<numberOfLines<<endl;
     //
     ShapeContainer Container = ShapeContainer(numberOfLines);
-    cout<<"txtFileLines.size(): "<<txtFileLines.size()<<endl;
+    // cout<<"txtFileLines.size(): "<<txtFileLines.size()<<endl;
     for (auto & line : txtFileLines) {
         int spaces_in_data = line.find(" ");
         if (spaces_in_data!=(int) std::string::npos){
@@ -106,15 +114,15 @@ void Executive::parseData(vector<string> txtFileLines){
 }
 
 void Executive::doCommand(ShapeContainer &container,
-                          string command, 
-                          int index, 
-                          string shapeType, 
-                          double param1, 
+                          string command,
+                          int index,
+                          string shapeType,
+                          double param1,
                           double param2){
     //
     try {
-        cout<<"command: "<<command<<endl;
-        cout<<"index: "<<index<<endl;
+        // cout<<"command: "<<command<<endl;
+        // cout<<"index: "<<index<<endl;
         if (command == "ADD"){
             if (shapeType == "CIR"){
                 Circle* newShape = new Circle(param1);
@@ -129,7 +137,6 @@ void Executive::doCommand(ShapeContainer &container,
         } else if (command == "DELETE"){
             container.remove(index);
         } else if (command == "PRINT"){
-            cout<<"check"<<endl;
             cout<<"Shape at index "<<index<<": ";
             std::string shape;
             shape = container.shapeName(index);
@@ -138,9 +145,8 @@ void Executive::doCommand(ShapeContainer &container,
             cout<<shape<<" area: = "<<shapeArea<<endl;
         }
     } catch (std::range_error ia){
-        // cout<<"Does not exist!"<<endl;
         cout<< ia.what() << '\n';
     } catch (std::exception ia){
-        cout<< ia.what() << '\n';
+        // cout<< ia.what() << '\n';
     }
 }

@@ -1,3 +1,11 @@
+/*
+@author - Corey Anderson
+@file - shape.cpp
+@date - 9/23/2019
+@brief - The Shape class will be an interface class, and there will be the 3
+subclasses of Shape: Circle, Rectangle, and Triangle.
+*/
+
 #include "Shape.h"
 #include <iostream>
 using namespace std;
@@ -43,7 +51,8 @@ Triangle::Triangle(double base, double height){
 }
 Triangle::~Triangle(){}
 double Triangle::area(){
-    return 1/2*Triangle::triangleBase*Triangle::triangleHeight;
+    double area = .5*Triangle::triangleBase*Triangle::triangleHeight;
+    return area;
 }
 std::string Triangle::shapeName(){
     return Triangle::Name;
