@@ -1,0 +1,7 @@
+6
+18364 Employee Chris Edwards 29
+32098 Manager Pat Wilson 33 Marketing
+33176 Manager Jose Martin 31 Sales
+11876 Employee Lou Johnson 24
+28453 Employee Larry Summers 45
+42118 Manager Susan Thompson 37 Technology
