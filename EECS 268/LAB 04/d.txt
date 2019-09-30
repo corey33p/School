@@ -1,0 +1,7 @@
+117324 Chris Johnson Freshman 15 47
+231098 Pat Smith Freshman 13 42
+220982 Sally Larson Sophomore 48 168
+320981 Mary Wilson Sophomore 52 149
+439083 Larry Edwards Junior 82 210
+439871 Samuel Johnson Freshman 16 31
+465132 Ashley Edwards Senior 112 359
