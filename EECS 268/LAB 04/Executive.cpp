@@ -1,134 +1,36 @@
+/*
+@author - Cory Anderson
+@file - Executive.cpp
+@date - 9/23/2019
+@brief - This will serve as a parent object, which will import data from
+a file and create the ShapeContainer data structure, which will handle all the
+individual shapes.
+*/
+
 using namespace std;
 #include <vector>
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <sstream>
-#include <algorithm>
 #include "Executive.h"
-#include "Student.h"
-#include "ListInterface.h"
-#include "LinkedList.h"
+#include "ShapeContainer.h"
+#include "Shape.h"
 
-
-template<class Student>
-Executive<Student>::Executive(){}
-template<class Student>
-Executive<Student>::~Executive(){}
-
-template<class Student>
-void Executive<Student>::read(std::string studentsFile, LinkedList<Student>& list){
+Executive::Executive(){}
+Executive::~Executive(){}
+void Executive::Executive::run(int argc, char **argv) {
     vector<string> txtFileLines;
     bool got_file = false;
+    std::string file1 = argv[1];
     while (!got_file){
-        got_file = readFile(studentsFile,txtFileLines);
+        got_file = readFile(file1,txtFileLines);
     }
     //
-    std::string id_in;
-    int id;
-    std::string firstName;
-    std::string lastName;
-    std::string level;
-    std::string hoursCompleted_in;
-    int hoursCompleted;
-    std::string pointsEarned_in;
-    int pointsEarned;
-    //
-    for (auto & line : txtFileLines) {
-        // cout<<"line: "<<line<<endl;
-        std::replace( line.begin(), line.end(), '\t', ' ');
-        //
-        int space_index = line.find_first_of(" ");
-        id_in = line.substr(0,space_index);
-        stringstream ss(id_in);
-        ss>>id;
-        line = line.substr(space_index+1,-1);
-        //
-        space_index = line.find_first_of(" ");
-        firstName = line.substr(0,space_index);
-        line = line.substr(space_index+1,-1);
-        //
-        space_index = line.find_first_of(" ");
-        lastName = line.substr(0,space_index);
-        line = line.substr(space_index+1,-1);
-        //
-        space_index = line.find_first_of(" ");
-        level = line.substr(0,space_index);
-        line = line.substr(space_index+1,-1);
-        //
-        space_index = line.find_first_of(" ");
-        hoursCompleted_in = line.substr(0,space_index);
-        stringstream ss1(hoursCompleted_in);
-        ss1>>hoursCompleted;
-        line = line.substr(space_index+1,-1);
-        //
-        space_index = line.find_first_of(" ");
-        pointsEarned_in = line.substr(0,space_index);
-        stringstream ss2(pointsEarned_in);
-        ss2>>pointsEarned;
-        line = line.substr(space_index+1,-1);
-        // -----------------------
-        // cout<<"line: "<<id<<endl;
-        // cout<<"firstName: "<<firstName<<endl;
-        // cout<<"lastName: "<<lastName<<endl;
-        // cout<<"level: "<<level<<endl;
-        // cout<<"hoursCompleted_in: "<<hoursCompleted_in<<endl;
-        // cout<<"pointsEarned_in: "<<pointsEarned_in<<endl<<endl;
-        Student student = Student(id,firstName,lastName,level,hoursCompleted,pointsEarned);
-        try {
-            list.insert(-1,student);
-        } catch (PrecondViolatedExcep &except){
-            cout<< except.what() << '\n';
-        } 
-    }
+    parseData(txtFileLines);
 }
 
-template<class Student>
-void Executive<Student>::run(std::istream& students, std::istream& commands){
-    std::istreambuf_iterator<char> eos;
-    std::string studentsFile;
-    students >> studentsFile;
-    std::string commandsFile; 
-    commands >> commandsFile;
-	LinkedList<Student> list;
-	Executive<Student>::read(studentsFile, list); // on return, "list" will have the student list
-    handlePrintAll(list);
-	std::string command;
-    cout<<"-----> ";
-    string commandParameters;
-	while (commands >> command){
-        // make command lowercase, just in case
-        std::transform(command.begin(), command.end(), command.begin(), 
-            [](unsigned char c){ return std::tolower(c); });
-        
-        // parse command
-        int space_index = command.find_first_of(" ");
-        commandParameters = command.substr(space_index+1,-1);
-        command = command.substr(0,space_index);
-        
-        // pass command
-		if (command == "class"){
-			handleClass(command, list);
-		} else if (command == "dropout"){
-			handleDropOut(command, list);
-		} else if (command == "honors"){
-			handleHonorsGPA(command, list);
-        } else if (command == "newstudent"){
-			handleNewStudent(command, list);
-        } else if (command == "printall"){
-			handlePrintAll(list);
-        } else if (command == "printstudent"){
-			handlePrintStudent(command, list);
-        } else if (command == "quit"){
-            break;
-        }
-        cout<<"-----> ";
-	}
-	return;
-}
-
-template<class Student>
-bool Executive<Student>::readFile(std::string fileName,vector<std::string> &lines){
+bool Executive::Executive::readFile(std::string fileName,vector<std::string> &lines){
     std::ifstream in(fileName.c_str());
     if(!in) {
         std::cerr << "Cannot open the File: "<<fileName<<std::endl;
@@ -141,77 +43,110 @@ bool Executive<Student>::readFile(std::string fileName,vector<std::string> &line
     in.close();
     return true;
 }
-//-------------------------------------------------------//
-//-------------------Handling Commands-------------------//
-//-------------------------------------------------------//
 
-template<class Student>
-void Executive<Student>::handleClass(std::string command, LinkedList<Student> list){
-    std::string _class;
-    vector<int> ids;
+void Executive::parseData(vector<string> txtFileLines){
+    std::string operationType;
+    std::string arrayIndex_in;
+    int arrayIndex;
+    std::string shapeType;
+    std::string parameter_1_in;
+    std::string parameter_2_in;
+    double parameter_1;
+    double parameter_2;
     //
-    std::replace( command.begin(), command.end(), '\t', ' ');
-    int space_index = command.find_first_of(" ");
-    _class = command.substr(0,space_index);
-    command = command.substr(space_index+1,-1);
+    string numberOfLines_in = txtFileLines[0];
+    stringstream ss4(numberOfLines_in);
+    int numberOfLines;
+    ss4>> numberOfLines;
     //
-    int newID;
-    string newID_in;
-    while (command.length() > 0){
-        space_index = command.find_first_of(" ");
-        newID_in = command.substr(0,space_index);
-        stringstream ss(newID_in);
-        ss>>newID;
-        ids.push_back(newID);
-        command = command.substr(space_index+1,-1);
+    ShapeContainer Container = ShapeContainer(numberOfLines);
+    // cout<<"txtFileLines.size(): "<<txtFileLines.size()<<endl;
+    for (auto & line : txtFileLines) {
+        int spaces_in_data = line.find(" ");
+        if (spaces_in_data!=(int) std::string::npos){
+            operationType="";
+            arrayIndex_in="";
+            arrayIndex=-1;
+            shapeType="";
+            parameter_1_in="";
+            parameter_2_in="";
+            parameter_1=-1;
+            parameter_2=-1;
+            //
+            int space_index = line.find_first_of(" ");
+            operationType = line.substr(0,space_index);
+            //
+            line = line.substr(space_index+1,-1);
+            space_index = line.find_first_of(" ");
+            arrayIndex_in = line.substr(0,space_index);
+            stringstream ss3(arrayIndex_in);
+            ss3>>arrayIndex;
+            if (operationType == "ADD"){
+                line = line.substr(space_index+1,-1);
+                // cout<<"line: "<<line<<endl;
+                space_index = line.find_first_of(" ");
+                shapeType = line.substr(0,space_index);
+                line = line.substr(space_index+1,-1);
+                if (shapeType=="CIR"){
+                    parameter_1_in = line.substr(0,-1);
+                    stringstream ss0(parameter_1_in);
+                    ss0>>parameter_1;
+                } else {
+                    space_index = line.find_first_of(" ");
+                    parameter_1_in = line.substr(0,space_index);
+                    stringstream ss1(parameter_1_in);
+                    ss1>>parameter_1;
+                    //
+                    parameter_2_in = line.substr(space_index+1,-1);
+                    stringstream ss2(parameter_2_in);
+                    ss2>>parameter_2;
+                }
+            }
+            //
+            // cout<<"operation: "<<operationType;
+            // cout<<" "<<arrayIndex;
+            // cout<<" "<<shapeType;
+            // cout<<" "<<parameter_1;
+            // cout<<" "<<parameter_2<<endl;
+            doCommand(Container,operationType,arrayIndex,shapeType,parameter_1,parameter_2);
+        }
     }
 }
 
-template<class Student>
-void Executive<Student>::handleDropOut(std::string command, LinkedList<Student>& list){
-    bool found = false;
-    Student student;
-    for (int i = 0; i < list.getLength();i++){
-        student = list.getEntry(i);
-        // if (student.getstudentID() == 
+void Executive::doCommand(ShapeContainer &container,
+                          string command,
+                          int index,
+                          string shapeType,
+                          double param1,
+                          double param2){
+    //
+    try {
+        // cout<<"command: "<<command<<endl;
+        // cout<<"index: "<<index<<endl;
+        if (command == "ADD"){
+            if (shapeType == "CIR"){
+                Circle* newShape = new Circle(param1);
+                container.add(newShape,index);
+            } else if (shapeType == "TRI"){
+                Triangle* newShape = new Triangle(param1,param2);
+                container.add(newShape,index);
+            } else if (shapeType == "REC"){
+                Rectangle* newShape = new Rectangle(param1,param2);
+                container.add(newShape,index);
+            }
+        } else if (command == "DELETE"){
+            container.remove(index);
+        } else if (command == "PRINT"){
+            cout<<"Shape at index "<<index<<": ";
+            std::string shape;
+            shape = container.shapeName(index);
+            double shapeArea;
+            shapeArea = container.area(index);
+            cout<<shape<<" area: = "<<shapeArea<<endl;
+        }
+    } catch (std::range_error ia){
+        cout<< ia.what() << '\n';
+    } catch (std::exception ia){
+        // cout<< ia.what() << '\n';
     }
 }
-
-template<class Student>
-void Executive<Student>::handleHonorsGPA(std::string command, LinkedList<Student> list){
-    
-}
-
-template<class Student>
-void Executive<Student>::handleNewStudent(std::string command, LinkedList<Student>& list){
-    
-}
-
-template<class Student>
-void Executive<Student>::handlePrintAll(LinkedList<Student> list){
-    Student student;
-    for (int i = 0; i < list.getLength();i++){
-        student = list.getEntry(i);
-        //
-        cout<<student.getlastName()<<", ";
-        cout<<student.getfirstName()<<":\n    ";
-        cout<<"Student ID: "<<student.getstudentID()<<",\n    ";
-        cout<<"Level: "<<student.getlevel()<<",\n    ";
-        //
-        int hours = student.getcreditHoursCompleted();
-        int points= student.getgradePointsEarned();
-        double gpa = (double) points / (double) hours;
-        //
-        cout<<"Credit Hours: "<<hours<<",\n    ";
-        cout<<"Grade Points: "<<points<<",\n    ";
-        cout<<"GPA: "<<gpa<<endl;
-    }
-}
-
-template<class Student>
-void Executive<Student>::handlePrintStudent(std::string command, LinkedList<Student> list){
-    
-}
-
-template class Executive<Student>;
-template class LinkedList<Student>;

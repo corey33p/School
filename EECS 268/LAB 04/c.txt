@@ -1,0 +1,10 @@
+class Frankenstein 220982 439083 222222
+printall
+dropout 320981
+printstudent 320981
+printall
+newstudent 123456 Mike Smith Sophomore
+printstudent 123456
+honors 3.33
+quit
+
