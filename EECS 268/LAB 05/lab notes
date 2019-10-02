@@ -1,0 +1,4 @@
+- queue of stacks
+- Queue<Stack<Process>> obj;
+- each function in each stack will have boolean variable as to whether the function can handle thrown exceptions
+- If during it's turn in the processor, a process has main return OR an exception is thrown and not handled it is removed from the processor queue.
