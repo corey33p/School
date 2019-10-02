@@ -9,9 +9,8 @@ def generate(n):
     for i in range(n):
         # ID
         new_ID = random.randint(100000,999999)
-        while new_ID in used_IDs:
-            new_ID = random.randint(100000,999999)
-        used_IDs.append(new_ID)
+        while new_ID not in used_IDs:
+            used_IDs.append(new_ID)
         
         # first name
         first_name_length = 0
@@ -32,7 +31,7 @@ def generate(n):
             if i == 0: last_name = last_name.upper()
         
         # class
-        student_class = random.sample(class_types,1)[0]
+        student_class = random.sample(class_types,1)
         
         # credit hours completed
         credit_hours_completed = 0
@@ -44,10 +43,8 @@ def generate(n):
         while grade_points_earned > credit_hours_completed * 4:
             grade_points_earned = int(random.gauss(credit_hours_completed * 4,credit_hours_completed))
         
-        line = str(new_ID) + " " + first_name + " " + last_name + " " + student_class + " " + str(credit_hours_completed) + " " + str(grade_points_earned) + "\n"
+        line = str(new_ID) + " " + first_name + " " + last_name + " " + str(credit_hours_completed) + " " + str(grade_points_earned) + "\n"
         full_string += line
         
     with open(os.getcwd().replace('\\','/')+'/data.txt',"w") as f:
         f.write(full_string)
-
-generate(150)
