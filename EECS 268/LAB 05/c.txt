@@ -1,0 +1,15 @@
+START itunes load y read n play n 0
+START chrome display n send n convert n store y 0
+START simple 0
+STATUS
+THROW
+STATUS
+CPU
+STATUS
+THROW
+STATUS
+CPU
+STATUS
+CPU
+STATUS
+THROW

@@ -1,22 +1,23 @@
-#include "PrecondViolatedExcep.h"
-#include "QueueInterface.h"
-
-using namespace std;
-
 #ifndef _QUEUE
 #define _QUEUE
 
+#include "PrecondViolatedExcep.h"
+#include "QueueInterface.h"
+#include "SLNode.h"
+
+using namespace std;
 
 template<class ItemType>
 class Queue : public QueueInterface<ItemType>{
     private:
         int queueSize;
-        
+        SLNode<ItemType>* headPtr;
     public:
-        virtual ~QueueInterface() {}
-        virtual bool isEmpty() const = 0;
-        virtual void enqueue(const ItemType& newEntry) /*throw (PrecondViolatedExcep)*/ = 0;
-        virtual void dequeue() /*throw (PrecondViolatedExcep)*/ = 0;
-        virtual ItemType peekFront() /*const throw (PrecondViolatedExcep)*/ = 0;
+        virtual ~Queue();
+        bool isEmpty() const;
+        void enqueue(const ItemType& newEntry);
+        void dequeue();
+        void toBack();
+        ItemType peekFront()const;
 };
 #endif

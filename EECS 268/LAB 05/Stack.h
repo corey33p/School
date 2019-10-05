@@ -3,14 +3,19 @@
 
 #include "PrecondViolatedExcep.h"
 #include "StackInterface.h"
+#include "SLNode.h"
 
 template<class ItemType>
 class Stack : public StackInterface<ItemType>{
+    private:
+        int stackSize;
+        SLNode<ItemType>* headPtr;
+        std::string name;
     public:
-        virtual ~StackInterface() {}
-        virtual bool isEmpty() const = 0;
-        virtual void push(const ItemType& newEntry) /* throw (PrecondViolatedExcep) */ = 0;
-        virtual void pop() /* throw (PrecondViolatedExcep) */ = 0;
-        virtual ItemType peek() const /* throw (PrecondViolatedExcep) */ = 0;
+        virtual ~Stack();
+        bool isEmpty() const;
+        void push(const ItemType& newEntry); // throw (PrecondViolatedExcep) 
+        void pop(); // throw (PrecondViolatedExcep)
+        ItemType peek() const; // throw (PrecondViolatedExcep)
 };
 #endif
