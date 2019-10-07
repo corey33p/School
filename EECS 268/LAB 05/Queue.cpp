@@ -45,6 +45,9 @@ void Queue<Stack>::enqueue(const Stack& newEntry){
 
 template<class Stack>
 void Queue<Stack>::dequeue(){
+    int z = 0;double a = 1/z;
+    cout<<"queueSize: "<<Queue::queueSize<<endl;
+    Queue::printQueue();
     int position = Queue::queueSize-1;
     //
     SLNode<Stack>* curPtr = Queue::headPtr;
@@ -64,22 +67,20 @@ void Queue<Stack>::dequeue(){
 
 template<class Stack>
 void Queue<Stack>::toBack(){
+    cout<<"!!!!!!!!!!!!!!!!!!!!!!!!!Queue::queueSize: "<<Queue::queueSize<<endl;
     if (Queue::queueSize > 1){
-        SLNode<Stack>* curPtr = Queue::headPtr;
         SLNode<Stack>* oldHead = Queue::headPtr;
-        Queue::headPtr = curPtr->getNext();
+        Queue::headPtr = oldHead->getNext();
+        oldHead->setNext(nullptr);
+        SLNode<Stack>* curPtr = Queue::headPtr;
         //
-        SLNode<Stack>* nextPtr = curPtr;
-        while (nextPtr != nullptr){
-            nextPtr=nextPtr->getNext();
-            if (nextPtr != nullptr){
-                curPtr = curPtr->getNext();
-            }
+        for (int i;i<Queue::queueSize;i++){
+            cout<<"i: "<<i<<endl;
+            curPtr=curPtr->getNext();
         }
         curPtr->setNext(oldHead);
         //
-        curPtr->setNext(nullptr);
-        curPtr = nextPtr = oldHead = nullptr;
+        curPtr = oldHead = nullptr;
     }
 }
 
@@ -99,6 +100,18 @@ Stack Queue<Stack>::peekFront(){
         Stack stack(currPtr->getItem());
         currPtr = nullptr;
         return stack;
+    }
+}
+
+template<class Stack>
+int Queue<Stack>::getqueueSize(){ return Queue::queueSize;}
+
+template<class Stack>
+void Queue<Stack>::printQueue(){
+    SLNode<Stack>* currPtr = Queue::headPtr;
+    for (int i;i<Queue::queueSize;i++){
+        cout<<"process name: "<<currPtr->getItem().getName()<<endl;
+        currPtr=currPtr->getNext();
     }
 }
 

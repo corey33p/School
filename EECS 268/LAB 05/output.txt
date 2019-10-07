@@ -1,0 +1,24 @@
+START itunes load y read n play n 0
+START chrome display n send n convert n store y 0
+START simple 0
+STATUS
+THROW
+STATUS
+CPU
+STATUS
+THROW
+STATUS
+CPU
+STATUS
+CPU
+STATUS
+THROW
+
+Process itunes is running the function play
+Process itunes is running the function load
+Process chrome is running the function store
+Process chrome is running the function store
+Process simple is running main
+Process simple has ended successfully
+Process itunes is running the function main
+Process itunes has ended due to an unhandled exception

@@ -20,5 +20,7 @@ class Queue : public QueueInterface<ItemType>{
         void dequeue();
         void toBack();
         ItemType peekFront();
+        int getqueueSize();
+        void printQueue();
 };
 #endif

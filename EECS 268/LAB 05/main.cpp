@@ -3,7 +3,6 @@
 #include "Stack.h"
 #include "Subprocess.h"
 #include "Processor.h"
-#include "Executive.cpp"
 
 using namespace std;
 
@@ -16,4 +15,3 @@ int main(int argc, char** argv) {
     exec.run(argv);
     return(0);
 }
-

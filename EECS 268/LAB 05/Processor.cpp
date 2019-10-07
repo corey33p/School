@@ -8,7 +8,7 @@ using namespace std;
 #include "Subprocess.h"
 
 // template <template<class Subprocess> class Stack>
-Processor::Processor(){}
+Processor::Processor(){Processor::status = "-";}
 
 // template <template<class Subprocess> class Stack>
 Processor::~Processor(){}
@@ -20,14 +20,18 @@ void Processor::startProcess(std::string name,std::vector<std::string> subproces
     
     // build process stack (of subprocesses)
     int subprocessIndex = 0;
-    for (auto & name : subprocesses) {
-        subprocess = Subprocess(name,canHandleExceptions[subprocessIndex]);
+    for (auto & subName : subprocesses) {
+        subprocess = Subprocess(subName,canHandleExceptions[subprocessIndex]);
         subprocessIndex++;
         newProcess.push(subprocess);
+    }
+    if (Processor::status == "-"){
+        Processor::status = "Process "+name+" is running the function "+subprocess.getName();
     }
     
     // add process stack to processor queue
     Processor::queue.enqueue(newProcess);
+    
 }
 
 // template <template<class Subprocess> class Stack>
@@ -41,27 +45,36 @@ void Processor::process(){
         Processor::status = "Process "+process.getName()+" has ended successfully\n";
     } else {
         queue.toBack();
-        Processor::status = "Process "+process.getName()+" is running the function "+subprocess.getName()+"\n";
+        Processor::status = "Process "+process.getName()+" is running the function "+subprocess.getName();
     }
 }
 
 // template <template<class Subprocess> class Stack>
 void Processor::throwException(){
-    Stack<Subprocess> process = Processor::queue.peekFront();
-    bool canHandle = process.peek().getcanHandleExceptions();
-    while (!canHandle && !process.isEmpty()){
-        Processor::queue.dequeue();
-        process = Processor::queue.peekFront();
-        canHandle = process.peek().getcanHandleExceptions();
+    Stack<Subprocess>* process = nullptr;
+    process = new Stack<Subprocess>(Processor::queue.peekFront());
+    // cout<<"|||||||||||||||||||process.isEmpty(): "<<process.isEmpty()<<endl;
+    bool* canHandle = nullptr;
+    canHandle = new bool(process->peek().getcanHandleExceptions());
+    while (!*canHandle || !process->isEmpty()){
+        Processor::queue.peekFront().pop();
+        *canHandle = process->peek().getcanHandleExceptions();
     }
-    Subprocess subprocess = process.peek();
-    if (process.isEmpty()){
-        Processor::status = "Process "+process.getName()+" is ending due to an unhandled exception\n";
-        queue.dequeue();
+    if (Processor::queue.isEmpty()){
+        Processor::status = "No processes are running";
     } else {
-        Processor::status = "Process "+process.getName()+" is running the function "+subprocess.getName()+"\n";
-        queue.toBack();
+        Subprocess subprocess = process->peek();
+        if (process->isEmpty()){
+            Processor::status = "Process "+process->getName()+" is ending due to an unhandled exception\n";
+            queue.dequeue();
+        } else {
+            Processor::status = "Process "+process->getName()+" is running the function "+subprocess.getName();
+            queue.toBack();
+        }
     }
+    delete canHandle;
+    canHandle = nullptr;
+    process = nullptr;
 }
 
 // template <template<class Subprocess> class Stack>
@@ -70,5 +83,3 @@ void Processor::printStatus(){cout<<Processor::status<<endl;}
 // template class Stack<Subprocess>;
 template class Queue<Stack<Subprocess>>;
 // template class Queue<template class Stack<Subprocess>>;
-
-

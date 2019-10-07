@@ -29,11 +29,16 @@ void Executive::run(char** argv){
     std::string processName;
     for (auto & line : txtFileLines) {
         command = popWord(line);
+        cout<<"COMMAND: "<<command<<endl;
         if (command == "START"){
             processName = popWord(line);
             std::vector<std::string> subprocesses;
             std::vector<bool> canHandle;
+            // cout<<"line: "<<line<<endl;
+            // cout<<"processName: "<<processName<<endl;
+            // cout<<"canHandle: "<<canHandle<<endl;
             parseLine(line,subprocesses,canHandle);
+            // cout<<"check"<<endl;
             processor.startProcess(processName,subprocesses,canHandle);
         } else if (command == "CPU"){
             processor.process();
@@ -49,6 +54,14 @@ std::string Executive::popWord(std::string& line){
     int space_index = line.find_first_of(" ");
     std::string theWord = line.substr(0,space_index);
     line = line.substr(space_index+1,-1);
+    
+    // get rid of spaces / newlines / etc
+    theWord.erase(remove(theWord.begin(), theWord.end(), ' '), theWord.end());
+    theWord.erase(remove(theWord.begin(), theWord.end(), '\n'), theWord.end());
+    theWord.erase(remove(theWord.begin(), theWord.end(), '\r'), theWord.end());
+    theWord.erase(remove(theWord.begin(), theWord.end(), '\t'), theWord.end());
+    theWord.erase(remove(theWord.begin(), theWord.end(), '\f'), theWord.end());
+    theWord.erase(remove(theWord.begin(), theWord.end(), '\v'), theWord.end());
     return theWord;
 }
 

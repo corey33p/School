@@ -63,14 +63,14 @@ void Stack<Subprocess>::pop(){
 
 template<class Subprocess>
 Subprocess Stack<Subprocess>::peek() const{
-    int position = 0;
+    // int position = 0;
     SLNode<Subprocess>* currPtr = Stack::headPtr;
-    for (int i = 0; i<position; i++){
-        if (currPtr->getNext() != nullptr) {
-            currPtr = currPtr->getNext();
-        }
-    }
-    if (currPtr == nullptr){
+    // for (int i = 0; i<position; i++){
+    //     if (currPtr->getNext() != nullptr) {
+    //         currPtr = currPtr->getNext();
+    //     }
+    // }
+    if (Stack::stackSize == 0){
         throw PrecondViolatedExcep("Invalid subprocess index. ");
     } else {
         Subprocess subprocess(currPtr->getItem());
