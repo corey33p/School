@@ -2,19 +2,20 @@
 #include "StackInterface.h"
 #include "SLNode.h"
 #include "Subprocess.h"
+#include "Stack.h"
 
 template<class Subprocess>
-Stack::~StackInterface(std::string name) : name(name) {}
+Stack<Subprocess>::Stack(std::string nam) : name(nam) {}
 
 template<class Subprocess>
-Stack::~StackInterface() {}
+Stack<Subprocess>::~Stack() {}
 
 template<class Subprocess>
-bool Stack::isEmpty() const{return (Stack::stackSize == 0);}
+bool Stack<Subprocess>::isEmpty() const{return (Stack::stackSize == 0);}
 
 template<class Subprocess>
-void Stack::push(const ItemType& newEntry){
-    newPosition = 0;
+void Stack<Subprocess>::push(const Subprocess& newEntry){
+    int newPosition = 0;
     //
     SLNode<Subprocess>* newNodePtr = new SLNode<Subprocess>(newEntry);
     newNodePtr->setItem(newEntry);
@@ -40,10 +41,10 @@ void Stack::push(const ItemType& newEntry){
 }
 
 template<class Subprocess>
-void Stack::pop(){
-    position = 0;
+void Stack<Subprocess>::pop(){
+    int position = 0;
     //
-    SLNode<Subprocess>* curPtr = LinkedList::headPtr;
+    SLNode<Subprocess>* curPtr = Stack::headPtr;
     if (position == 0) {
        headPtr = headPtr->getNext();
     } else {
@@ -57,13 +58,13 @@ void Stack::pop(){
     curPtr->setNext(nullptr);
     delete curPtr;
     curPtr = nullptr;
-    LinkedList::itemCount--;
+    Stack::stackSize--;
 }
 
 template<class Subprocess>
-Subprocess Stack::peek() const{
-    position = 0;
-    SLNode<Subprocess>* currPtr = LinkedList::headPtr;
+Subprocess Stack<Subprocess>::peek() const{
+    int position = 0;
+    SLNode<Subprocess>* currPtr = Stack::headPtr;
     for (int i = 0; i<position; i++){
         if (currPtr->getNext() != nullptr) {
             currPtr = currPtr->getNext();
@@ -78,3 +79,7 @@ Subprocess Stack::peek() const{
     }
 }
 
+template<class Subprocess>
+std::string Stack<Subprocess>::getName(){return Stack::name;}
+
+template class Stack<Subprocess>;

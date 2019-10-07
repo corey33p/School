@@ -2,6 +2,8 @@
 #include "Executive.h"
 #include "Stack.h"
 #include "Subprocess.h"
+#include "Processor.h"
+#include "Executive.cpp"
 
 using namespace std;
 
@@ -10,7 +12,8 @@ int main(int argc, char** argv) {
 		cout << "Error, program requires 1 argument." << endl;
 		exit(1);
 	}
-    Executive<Stack<Subprocess>> exec;
+    Executive exec;
     exec.run(argv);
     return(0);
 }
+

@@ -1,31 +1,34 @@
 #include "PrecondViolatedExcep.h"
 #include "QueueInterface.h"
 #include "SLNode.h"
+#include "Queue.h"
+#include "Stack.h"
+#include "Subprocess.h"
 
 using namespace std;
 
-template<class Stack,class Subprocess>
-Queue::Queue(){ Queue::queueSize = 0; }
+template<class Stack>
+Queue<Stack>::Queue(){ Queue::queueSize = 0; }
 
-template<class Stack,class Subprocess>
-Queue::~Queue() {}
+template<class Stack>
+Queue<Stack>::~Queue() {}
 
-template<class Stack,class Subprocess>
-bool Queue::isEmpty() const{ return (Queue::queueSize == 0);}
+template<class Stack>
+bool Queue<Stack>::isEmpty() const{ return (Queue::queueSize == 0);}
 
-template<class Stack,class Subprocess>
-void Queue::enqueue(const ItemType& newEntry){
-    newPosition = Queue::queueSize;
+template<class Stack>
+void Queue<Stack>::enqueue(const Stack& newEntry){
+    int newPosition = Queue::queueSize;
     //
-    SLNode<Stack<Subprocess>>* newNodePtr = new SLNode<Stack<Subprocess>>(newEntry);
+    SLNode<Stack>* newNodePtr = new SLNode<Stack>(newEntry);
     newNodePtr->setItem(newEntry);
     //
     if (newPosition == 0){
         newNodePtr->setNext(Queue::headPtr);
         Queue::headPtr = newNodePtr;
     } else {
-        SLNode<Stack<Subprocess>>* currPtr = Queue::headPtr;
-        SLNode<Stack<Subprocess>>* prevNodePtr = nullptr;
+        SLNode<Stack>* currPtr = Queue::headPtr;
+        SLNode<Stack>* prevNodePtr = nullptr;
         for (int i=0; i<newPosition; i++){
             prevNodePtr = currPtr;
             currPtr = currPtr->getNext();
@@ -35,22 +38,21 @@ void Queue::enqueue(const ItemType& newEntry){
         prevNodePtr = nullptr;
         newNodePtr = nullptr;
         currPtr = nullptr;
-        }
+    }
     newNodePtr = nullptr;
     Queue::queueSize++;
-    }
 }
 
-template<class Stack,class Subprocess>
-void Queue::dequeue(){
-    position = Queue::queueSize-1;
+template<class Stack>
+void Queue<Stack>::dequeue(){
+    int position = Queue::queueSize-1;
     //
-    SLNode<Stack<Subprocess>>* curPtr = Queue::headPtr;
+    SLNode<Stack>* curPtr = Queue::headPtr;
     //
     for (int i = 0; i<position-1; i++){
         curPtr=curPtr->getNext();
     }
-    SLNode<Stack<Subprocess>>* prevPtr = curPtr;
+    SLNode<Stack>* prevPtr = curPtr;
     curPtr=curPtr->getNext();
     prevPtr->setNext(curPtr->getNext());
     //
@@ -60,14 +62,14 @@ void Queue::dequeue(){
     Queue::queueSize--;
 }
 
-template<class Stack,class Subprocess>
-void toBack(){
+template<class Stack>
+void Queue<Stack>::toBack(){
     if (Queue::queueSize > 1){
-        SLNode<Stack<Subprocess>>* curPtr = Queue::headPtr;
-        SLNode<Stack<Subprocess>>* oldHead = Queue::headPtr;
+        SLNode<Stack>* curPtr = Queue::headPtr;
+        SLNode<Stack>* oldHead = Queue::headPtr;
         Queue::headPtr = curPtr->getNext();
         //
-        SLNode<Stack<Subprocess>>* nextPtr = curPtr;
+        SLNode<Stack>* nextPtr = curPtr;
         while (nextPtr != nullptr){
             nextPtr=nextPtr->getNext();
             if (nextPtr != nullptr){
@@ -78,13 +80,14 @@ void toBack(){
         //
         curPtr->setNext(nullptr);
         curPtr = nextPtr = oldHead = nullptr;
+    }
 }
 
-template<class Stack,class Subprocess>
-Stack Queue::peekFront(){
-    position = Queue::queueSize-1;
+template<class Stack>
+Stack Queue<Stack>::peekFront(){
+    int position = Queue::queueSize-1;
     //
-    SLNode<Stack<Subprocess>>* currPtr = LinkedList::headPtr;
+    SLNode<Stack>* currPtr = Queue::headPtr;
     for (int i = 0; i<position; i++){
         if (currPtr->getNext() != nullptr) {
             currPtr = currPtr->getNext();
@@ -99,6 +102,5 @@ Stack Queue::peekFront(){
     }
 }
 
-template<class Stack,class Subprocess>
-void Queue::popStack(){
-    Queue::headPtr->
+// template class Stack<Subprocess>;
+template class Queue<Stack<Subprocess>>;

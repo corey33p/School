@@ -9,13 +9,16 @@ A "process" is a Stack of Subprocesses.
 using namespace std;
 #include <iostream>
 #include <string>
+#include <vector>
 #include "Stack.h"
 #include "Queue.h"
+#include "Subprocess.h"
 
-template<class ItemType, class ItemType2>
+// template<class ItemType>
 class Processor{
     private:
-        Queue<ItemType> queue;
+        Queue<Stack<Subprocess>> queue;
+        // Queue queue;
         std::string status;
     public:
         Processor();

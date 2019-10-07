@@ -2,7 +2,6 @@
 #define LIST_INTERFACE
 #include "PrecondViolatedExcep.h"
 using namespace std;
-#include "Student.h"
 
 template<class ItemType>
 class ListInterface{

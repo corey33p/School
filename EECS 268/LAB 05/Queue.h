@@ -13,11 +13,12 @@ class Queue : public QueueInterface<ItemType>{
         int queueSize;
         SLNode<ItemType>* headPtr;
     public:
+        Queue();
         virtual ~Queue();
         bool isEmpty() const;
         void enqueue(const ItemType& newEntry);
         void dequeue();
         void toBack();
-        ItemType peekFront()const;
+        ItemType peekFront();
 };
 #endif

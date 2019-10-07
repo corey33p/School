@@ -3,7 +3,8 @@ using namespace std;
 #include <string>
 #include "Subprocess.h"
 
-Subprocess::Subprocess(std::string name,bool canHandleExceptions) name(name),canHandleExceptions(canHandleExceptions){}
+Subprocess::Subprocess(){}
+Subprocess::Subprocess(std::string nam,bool canHandleExceptions) : name(nam),canHandleExceptions(canHandleExceptions){}
 Subprocess::~Subprocess(){}
 string Subprocess::getName(){return Subprocess::name;}
 bool Subprocess::getcanHandleExceptions(){return Subprocess::canHandleExceptions;}

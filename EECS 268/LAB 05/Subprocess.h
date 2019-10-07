@@ -10,7 +10,8 @@ class Subprocess{
         string name;
         bool canHandleExceptions;
     public:
-        Subprocess(std::string name);
+        Subprocess();
+        Subprocess(std::string nam,bool canHandleExceptions);
         virtual ~Subprocess();
         string getName();
         bool getcanHandleExceptions();

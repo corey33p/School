@@ -12,14 +12,11 @@ using namespace std;
 #include "Processor.h"
 #include "Subprocess.h"
 
-template<class Stack>
-Executive<Stack>::Executive(){}
+Executive::Executive(){}
 
-template<class Stack>
-Executive<Stack>::~Executive(){}
+Executive::~Executive(){}
 
-template<class Stack>
-void Executive<Stack>::run(char** argv){
+void Executive::run(char** argv){
     vector<string> txtFileLines;
     bool got_file = false;
     std::string file1 = argv[1];
@@ -27,7 +24,7 @@ void Executive<Stack>::run(char** argv){
     if (!got_file){return;}
     //
     
-    Processor<Stack,Subprocess> processor;
+    Processor processor;
     std::string command;
     std::string processName;
     for (auto & line : txtFileLines) {
@@ -45,18 +42,17 @@ void Executive<Stack>::run(char** argv){
         } else if (command == "STATUS"){
             processor.printStatus();
         }
+    }
 }
 
-template<class Stack>
-std::string Executive<Stack>::popWord(std::string& line){
-    space_index = line.find_first_of(" ");
+std::string Executive::popWord(std::string& line){
+    int space_index = line.find_first_of(" ");
     std::string theWord = line.substr(0,space_index);
     line = line.substr(space_index+1,-1);
-    return theWord
+    return theWord;
 }
 
-template<class Stack>
-bool Executive<Stack>::readFile(std::string fileName,vector<std::string> &lines){
+bool Executive::readFile(std::string fileName,vector<std::string> &lines){
     std::ifstream in(fileName.c_str());
     if(!in) {
         std::cerr << "Cannot open the File: "<<fileName<<std::endl;
@@ -70,9 +66,8 @@ bool Executive<Stack>::readFile(std::string fileName,vector<std::string> &lines)
     return true;
 }
 
-template<class Stack>
-void Executive<Stack>::parseLine(std::string fileLine, std::vector<std::string>& subprocesses, std::vector<bool>& canHandle){
-    subprocesses.push_back(main);
+void Executive::parseLine(std::string fileLine, std::vector<std::string>& subprocesses, std::vector<bool>& canHandle){
+    subprocesses.push_back("main");
     canHandle.push_back(false);
     //
     std::string newSub;
@@ -87,3 +82,5 @@ void Executive<Stack>::parseLine(std::string fileLine, std::vector<std::string>&
     }
 }
 
+template class Stack<Subprocess>;
+// template class Processor<Stack<Subprocess>>;
