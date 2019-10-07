@@ -5,7 +5,9 @@
 #include "Stack.h"
 
 template<class Subprocess>
-Stack<Subprocess>::Stack(std::string nam) : name(nam) {}
+Stack<Subprocess>::Stack(std::string nam) : name(nam) {
+    Stack::stackSize = 0;
+}
 
 template<class Subprocess>
 Stack<Subprocess>::~Stack() {}
@@ -42,44 +44,38 @@ void Stack<Subprocess>::push(const Subprocess& newEntry){
 
 template<class Subprocess>
 void Stack<Subprocess>::pop(){
-    int position = 0;
     //
-    SLNode<Subprocess>* curPtr = Stack::headPtr;
-    if (position == 0) {
-       headPtr = headPtr->getNext();
-    } else {
-        for (int i = 0; i<position-1; i++){
-            curPtr=curPtr->getNext();
-        }
-       SLNode<Subprocess>* prevPtr = curPtr;
-       curPtr=curPtr->getNext();
-       prevPtr->setNext(curPtr->getNext());
-    }
-    curPtr->setNext(nullptr);
-    delete curPtr;
-    curPtr = nullptr;
+    SLNode<Subprocess>* oldHead = Stack::headPtr;
+    Stack::headPtr = Stack::headPtr->getNext();
+    delete oldHead;
+    oldHead = nullptr;
     Stack::stackSize--;
 }
 
 template<class Subprocess>
 Subprocess Stack<Subprocess>::peek() const{
-    // int position = 0;
-    SLNode<Subprocess>* currPtr = Stack::headPtr;
-    // for (int i = 0; i<position; i++){
-    //     if (currPtr->getNext() != nullptr) {
-    //         currPtr = currPtr->getNext();
-    //     }
-    // }
     if (Stack::stackSize == 0){
         throw PrecondViolatedExcep("Invalid subprocess index. ");
     } else {
-        Subprocess subprocess(currPtr->getItem());
-        currPtr = nullptr;
+        Subprocess subprocess(Stack::headPtr->getItem());
+        // currPtr = nullptr;
         return subprocess;
     }
 }
 
 template<class Subprocess>
 std::string Stack<Subprocess>::getName(){return Stack::name;}
+
+template<class Subprocess>
+void Stack<Subprocess>::printStack(){
+    SLNode<Subprocess>* currPtr = Stack::headPtr;
+    for (int i;i<Stack::stackSize;i++){
+        cout<<"subprocess name: "<<currPtr->getItem().getName()<<endl;
+        currPtr=currPtr->getNext();
+    }
+}
+
+template<class Subprocess>
+int Stack<Subprocess>::getstackSize(){return Stack::stackSize;}
 
 template class Stack<Subprocess>;

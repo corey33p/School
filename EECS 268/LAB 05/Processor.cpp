@@ -54,11 +54,20 @@ void Processor::throwException(){
     Stack<Subprocess>* process = nullptr;
     process = new Stack<Subprocess>(Processor::queue.peekFront());
     // cout<<"|||||||||||||||||||process.isEmpty(): "<<process.isEmpty()<<endl;
-    bool* canHandle = nullptr;
-    canHandle = new bool(process->peek().getcanHandleExceptions());
-    while (!*canHandle || !process->isEmpty()){
+    Subprocess* subprocess = nullptr;
+    subprocess = new Subprocess(process->peek());
+    bool canHandle = subprocess->getcanHandleExceptions();
+    while ((!canHandle) && (!process->isEmpty())){
+        // cout<<"AOEUAOEUSNOATHEUSNTOAHEUSHT"<<endl;
         Processor::queue.peekFront().pop();
-        *canHandle = process->peek().getcanHandleExceptions();
+        delete process;
+        process = new Stack<Subprocess>(Processor::queue.peekFront());
+        delete subprocess;
+        cout<<"process->getstackSize(): "<<process->getstackSize()<<endl;
+        subprocess =  new Subprocess(process->peek());
+        if (!process->isEmpty()){
+            canHandle = subprocess->getcanHandleExceptions();
+        }
     }
     if (Processor::queue.isEmpty()){
         Processor::status = "No processes are running";
@@ -72,9 +81,10 @@ void Processor::throwException(){
             queue.toBack();
         }
     }
-    delete canHandle;
-    canHandle = nullptr;
+    delete process;
+    delete subprocess;
     process = nullptr;
+    subprocess = nullptr;
 }
 
 // template <template<class Subprocess> class Stack>

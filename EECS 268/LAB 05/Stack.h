@@ -15,9 +15,11 @@ class Stack : public StackInterface<ItemType>{
         Stack(std::string nam);
         virtual ~Stack();
         bool isEmpty() const;
-        void push(const ItemType& newEntry); // throw (PrecondViolatedExcep) 
+        void push(const ItemType& newEntry); // throw (PrecondViolatedExcep)
         void pop(); // throw (PrecondViolatedExcep)
         ItemType peek() const; // throw (PrecondViolatedExcep)
         std::string getName();
+        void printStack();
+        int getstackSize();
 };
 #endif
