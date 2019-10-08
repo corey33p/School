@@ -15,57 +15,70 @@ Processor::~Processor(){}
 
 // template <template<class Subprocess> class Stack>
 void Processor::startProcess(std::string name,std::vector<std::string> subprocesses,std::vector<bool> canHandleExceptions){
-    Stack<Subprocess> newProcess(name);
-    Subprocess subprocess;
+    Stack<Subprocess>* newProcess;
+    newProcess = new Stack<Subprocess>(name);
+    Subprocess* subprocess;
     
     // build process stack (of subprocesses)
     int subprocessIndex = 0;
     for (auto & subName : subprocesses) {
-        subprocess = Subprocess(subName,canHandleExceptions[subprocessIndex]);
+        subprocess = new Subprocess(subName,canHandleExceptions[subprocessIndex]);
         subprocessIndex++;
-        newProcess.push(subprocess);
+        newProcess->push(*subprocess);
     }
     if (Processor::status == "-"){
-        Processor::status = "Process "+name+" is running the function "+subprocess.getName();
+        Processor::status = "Process "+name+" is running the function "+subprocess->getName();
     }
     
     // add process stack to processor queue
-    Processor::queue.enqueue(newProcess);
-    
+    Processor::queue.enqueue(*newProcess);
+    newProcess = nullptr;
+    subprocess = nullptr;
 }
 
 // template <template<class Subprocess> class Stack>
 void Processor::process(){
-    Stack<Subprocess> process = Processor::queue.peekFront();
-    Subprocess subprocess = process.peek();
-    process.pop();
+    Stack<Subprocess>* process;
+    process = new Stack<Subprocess>(Processor::queue.peekFront());
+    Subprocess* subprocess;
+    subprocess = new Subprocess(process->peek());
+    process->pop();
     //
-    if (process.isEmpty()){
+    if (process->isEmpty()){
         Processor::queue.dequeue();
-        Processor::status = "Process "+process.getName()+" has ended successfully\n";
+        Processor::status = "Process "+process->getName()+" has ended successfully\n";
     } else {
         queue.toBack();
-        Processor::status = "Process "+process.getName()+" is running the function "+subprocess.getName();
+        Processor::status = "Process "+process->getName()+" is running the function "+subprocess->getName();
     }
+    delete process;
+    process = nullptr;
+    delete subprocess;
+    subprocess = nullptr;
 }
 
 // template <template<class Subprocess> class Stack>
 void Processor::throwException(){
     Stack<Subprocess>* process = nullptr;
     process = new Stack<Subprocess>(Processor::queue.peekFront());
-    // cout<<"|||||||||||||||||||process.isEmpty(): "<<process.isEmpty()<<endl;
+    // cout<<"uaeoueooaueaoeuaoeuaoeuprocess->isEmpty(): "<<process->isEmpty()<<endl;
     Subprocess* subprocess = nullptr;
     subprocess = new Subprocess(process->peek());
+    // cout<<"aoesnuthoansethutuaotnuehoasueBBBBBBBBBBBBBBB"<<endl;
     bool canHandle = subprocess->getcanHandleExceptions();
     while ((!canHandle) && (!process->isEmpty())){
-        // cout<<"AOEUAOEUSNOATHEUSNTOAHEUSHT"<<endl;
-        Processor::queue.peekFront().pop();
-        delete process;
-        process = new Stack<Subprocess>(Processor::queue.peekFront());
+        // cout<<"\ncanHandle: "<<canHandle<<endl;
+        // cout<<"process->isEmpty(): "<<process->isEmpty()<<endl;
+        // Processor::queue.peekFront().pop();
+        // delete process;
+        // process = new Stack<Subprocess>(Processor::queue.peekFront());
+        // cout<<"process->getName(): "<<process->getName()<<endl;
+        // cout<<"process->getstackSize(): "<<process->getstackSize()<<endl;
+        process->pop();
         delete subprocess;
-        cout<<"process->getstackSize(): "<<process->getstackSize()<<endl;
+        // cout<<"process->getstackSize(): "<<process->getstackSize()<<endl;
         subprocess =  new Subprocess(process->peek());
-        if (!process->isEmpty()){
+        if (process->isEmpty()){
             canHandle = subprocess->getcanHandleExceptions();
         }
     }

@@ -11,7 +11,15 @@ template<class Stack>
 Queue<Stack>::Queue(){ Queue::queueSize = 0; }
 
 template<class Stack>
-Queue<Stack>::~Queue() {}
+Queue<Stack>::Queue(const Queue<Stack> &q) {Queue::queueSize = q.queueSize; }
+
+template<class Stack>
+Queue<Stack>::~Queue() {
+    while (Queue::queueSize > 0){
+        Queue::dequeue();
+    }
+    Queue::headPtr=nullptr;
+}
 
 template<class Stack>
 bool Queue<Stack>::isEmpty() const{ return (Queue::queueSize == 0);}
@@ -45,23 +53,10 @@ void Queue<Stack>::enqueue(const Stack& newEntry){
 
 template<class Stack>
 void Queue<Stack>::dequeue(){
-    int z = 0;double a = 1/z;
-    cout<<"queueSize: "<<Queue::queueSize<<endl;
-    Queue::printQueue();
-    int position = Queue::queueSize-1;
-    //
-    SLNode<Stack>* curPtr = Queue::headPtr;
-    //
-    for (int i = 0; i<position-1; i++){
-        curPtr=curPtr->getNext();
-    }
-    SLNode<Stack>* prevPtr = curPtr;
-    curPtr=curPtr->getNext();
-    prevPtr->setNext(curPtr->getNext());
-    //
-    curPtr->setNext(nullptr);
-    delete curPtr;
-    curPtr = nullptr;
+    SLNode<Stack>* nextPtr = Queue::headPtr->getNext();
+    delete headPtr;
+    headPtr=nextPtr;
+    nextPtr = nullptr;
     Queue::queueSize--;
 }
 
@@ -74,33 +69,22 @@ void Queue<Stack>::toBack(){
         oldHead->setNext(nullptr);
         SLNode<Stack>* curPtr = Queue::headPtr;
         //
-        for (int i;i<Queue::queueSize;i++){
+        for (int i;i<Queue::queueSize-2;i++){
             cout<<"i: "<<i<<endl;
             curPtr=curPtr->getNext();
         }
         curPtr->setNext(oldHead);
         //
-        curPtr = oldHead = nullptr;
+        curPtr = nullptr;
+        oldHead = nullptr;
     }
 }
 
 template<class Stack>
 Stack Queue<Stack>::peekFront(){
-    int position = Queue::queueSize-1;
-    //
-    SLNode<Stack>* currPtr = Queue::headPtr;
-    for (int i = 0; i<position; i++){
-        if (currPtr->getNext() != nullptr) {
-            currPtr = currPtr->getNext();
-        }
-    }
-    if (currPtr == nullptr){
-        throw PrecondViolatedExcep("Invalid subprocess index. ");
-    } else {
-        Stack stack(currPtr->getItem());
-        currPtr = nullptr;
-        return stack;
-    }
+    Stack* stack;
+    stack = new Stack(Queue::headPtr->getItem());
+    return *stack;
 }
 
 template<class Stack>

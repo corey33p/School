@@ -14,6 +14,7 @@ class Queue : public QueueInterface<ItemType>{
         SLNode<ItemType>* headPtr;
     public:
         Queue();
+        Queue(const Queue<ItemType>& q);
         virtual ~Queue();
         bool isEmpty() const;
         void enqueue(const ItemType& newEntry);

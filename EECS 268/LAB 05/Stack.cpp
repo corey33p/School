@@ -10,30 +10,35 @@ Stack<Subprocess>::Stack(std::string nam) : name(nam) {
 }
 
 template<class Subprocess>
-Stack<Subprocess>::~Stack() {}
+Stack<Subprocess>::~Stack() {
+    while (Stack::stackSize > 0){
+        Stack::pop();
+    }
+    Stack::headPtr=nullptr;
+}
 
 template<class Subprocess>
 bool Stack<Subprocess>::isEmpty() const{return (Stack::stackSize == 0);}
 
 template<class Subprocess>
 void Stack<Subprocess>::push(const Subprocess& newEntry){
-    int newPosition = 0;
+    int newPosition = Stack::stackSize;
     //
     SLNode<Subprocess>* newNodePtr = new SLNode<Subprocess>(newEntry);
     newNodePtr->setItem(newEntry);
     //
     if (newPosition == 0){
-        newNodePtr->setNext(Stack::headPtr);
+        // newNodePtr->setNext(Stack::headPtr);
         Stack::headPtr = newNodePtr;
     } else {
         SLNode<Subprocess>* currPtr = Stack::headPtr;
         SLNode<Subprocess>* prevNodePtr = nullptr;
-        for (int i=0; i<newPosition; i++){
+        // for (int i=0; i<newPosition; i++){
+        while (currPtr != nullptr){
             prevNodePtr = currPtr;
             currPtr = currPtr->getNext();
         }
         prevNodePtr->setNext(newNodePtr);
-        newNodePtr->setNext(currPtr);
         prevNodePtr = nullptr;
         newNodePtr = nullptr;
         currPtr = nullptr;
@@ -44,23 +49,55 @@ void Stack<Subprocess>::push(const Subprocess& newEntry){
 
 template<class Subprocess>
 void Stack<Subprocess>::pop(){
+    if (Stack::stackSize == 0){return;}
+    // cout<<"Stack::stackSize1: "<<Stack::stackSize<<endl;
     //
-    SLNode<Subprocess>* oldHead = Stack::headPtr;
-    Stack::headPtr = Stack::headPtr->getNext();
-    delete oldHead;
-    oldHead = nullptr;
+    if (Stack::stackSize == 1) {
+        delete Stack::headPtr;
+        Stack::headPtr = nullptr;
+        // Stack::headPtr = Stack::headPtr->getNext();
+    } else if (Stack::stackSize == 2){
+        SLNode<Subprocess>* nextPtr = Stack::headPtr->getNext();
+        // nextPtr->setNext(nullptr);
+        delete(nextPtr);
+        Stack::headPtr->setNext(nullptr);
+    }else {
+        SLNode<Subprocess>* curPtr = Stack::headPtr;
+        for (int i = 0; i<Stack::stackSize-2; i++){
+            curPtr=curPtr->getNext();
+        }
+        SLNode<Subprocess>* prevPtr = curPtr;
+        curPtr=curPtr->getNext();
+        prevPtr->setNext(nullptr);
+        prevPtr = nullptr;
+        // curPtr->setNext(nullptr);
+        delete curPtr;
+        curPtr = nullptr;
+    }
     Stack::stackSize--;
+    // cout<<"Stack::stackSize2: "<<Stack::stackSize<<endl;
 }
 
 template<class Subprocess>
 Subprocess Stack<Subprocess>::peek() const{
-    if (Stack::stackSize == 0){
-        throw PrecondViolatedExcep("Invalid subprocess index. ");
-    } else {
-        Subprocess subprocess(Stack::headPtr->getItem());
-        // currPtr = nullptr;
-        return subprocess;
+    int position = Stack::stackSize-1;
+    //
+    SLNode<Subprocess>* curPtr = Stack::headPtr;
+    if (position == 1){
+        Subprocess* subprocess;
+        subprocess = new Subprocess(Stack::headPtr->getItem());
+        curPtr = nullptr;
+        return *subprocess;
+    } else if (position > 1)  {
+        for (int i = 0; i<position; i++){
+            curPtr=curPtr->getNext();
+        }
     }
+    cout<<"position: "<<position<<endl;
+    Subprocess* subprocess;
+    subprocess = new Subprocess(curPtr->getItem());
+    curPtr = nullptr;
+    return *subprocess;
 }
 
 template<class Subprocess>
@@ -73,6 +110,7 @@ void Stack<Subprocess>::printStack(){
         cout<<"subprocess name: "<<currPtr->getItem().getName()<<endl;
         currPtr=currPtr->getNext();
     }
+    currPtr = nullptr;
 }
 
 template<class Subprocess>
