@@ -1,4 +1,5 @@
 #include "Matrix.h"
+#include <string>
 
 Matrix::Matrix(std::istream& inp, int n){
     size=n;
@@ -50,7 +51,11 @@ double Matrix::det() const{
 void Matrix::print() {
     for (int row = 0; row < Matrix::size; row++){
         for (int col = 0; row < Matrix::size; col++) {
-            cout<<Matrix::m[row][col]<<" ";
+            string entry = m[row][col];
+            for (int i = 0; i< (4- entry.length());i++){
+                entry = " " + entry;
+            }
+            cout<<entry<<" ";
         }
         cout<<endl;
     }
