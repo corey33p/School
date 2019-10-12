@@ -16,7 +16,6 @@ Executive::Executive(std::string fileName){
     cout<<"Electric Field as read:"<<endl;
     f.printField();
     f.start();
-    f.printSteps();
 }
 
 Executive::~Executive(){}

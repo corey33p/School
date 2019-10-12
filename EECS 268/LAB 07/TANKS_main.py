@@ -81,7 +81,7 @@ import numpy as np
 
 class TANKS:
     def __init__(self):
-        data = list(self.loadFile("t6.txt"))
+        data = list(self.loadFile("t3.txt"))
         rows,cols=data.pop(0),data.pop(0)
         ar = np.asarray(data)
         ar = ar.reshape(rows,cols)
