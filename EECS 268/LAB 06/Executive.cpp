@@ -1,5 +1,6 @@
 using namespace std;
 #include <iostream>
+#include "Executive.h"
 #include "Matrix.h"
 
 Executive::Executive(std::string fileName){
@@ -11,7 +12,7 @@ Executive::Executive(std::string fileName){
     while (file >> size) {
         Matrix m = Matrix(file,size);
         double determinant = m.det();
-        m.printMatrix();
+        m.print();
         cout<<"determinant: "<<determinant<<endl;
     }
 }
