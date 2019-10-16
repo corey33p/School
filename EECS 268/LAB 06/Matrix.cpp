@@ -1,3 +1,11 @@
+/*
+@author - Corey Anderson
+@file - Matrix.h
+@date - 10/12/2019
+@brief - A matrix class with a recursive function for evaluating the
+         determinant of the matrix.
+*/
+
 #include "Matrix.h"
 #include <math.h>    // pow
 #include <string>
@@ -7,8 +15,10 @@ using namespace std;
 
 Matrix::Matrix(std::istream& inp, int n){
     size=n;
+    Matrix::m=nullptr;
     Matrix::m = new double*[n];
     for (int i=0; i<n;i++){
+        Matrix::m[i] = nullptr;
         Matrix::m[i] = new double[n];
     }
     std::string next_input;
@@ -42,6 +52,15 @@ Matrix::Matrix(const Matrix& M, int n, int r, int c){
     }
 }
 
+Matrix::~Matrix(){
+    for (int row = 0; row < Matrix::size; row++){
+        delete[] Matrix::m[row];
+        Matrix::m[row]=nullptr;
+    }
+    delete [] Matrix::m;
+    m = nullptr;
+}
+
 double Matrix::det() const{
     double d;
     if (Matrix::size == 2) {
@@ -73,6 +92,7 @@ void Matrix::print() {
         }
     }
     
+    if (max_size == 1){max_size ++;}
     // the following loops will print the matrix
     std::string entry;
     for (int row = 0; row < Matrix::size; row++){

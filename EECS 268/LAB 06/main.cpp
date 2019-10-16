@@ -1,3 +1,10 @@
+/*
+@author - Corey Anderson
+@file - main.cpp
+@date - 10/12/2019
+@brief - Evaluate determinants of matrices via a recursive method.
+*/
+
 #include <iostream>
 #include "Executive.h"
 
@@ -8,6 +15,6 @@ int main(int argc, char** argv) {
 		cout << "Error, program requires 1 argument." << endl;
 		exit(1);
 	}
-    Executive exec(argv[1]);
+    {Executive exec(argv[1]);}
     return(0);
 }
