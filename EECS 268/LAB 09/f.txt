@@ -1,1 +1,1 @@
-lab9 30 random insertion
+lab9 500000000 random merge
