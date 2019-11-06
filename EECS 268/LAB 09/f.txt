@@ -1,1 +1,1 @@
-lab9 500000000 random merge
+lab9 500000 robot merge

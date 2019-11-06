@@ -8,12 +8,12 @@ using namespace std;
 
 class Executive{
     public:
-        Executive(std::string fileName);
+        Executive(std::string labNumber, std::string listSize, std::string initMethod,std::string sortType);
         virtual ~Executive();
     private:
         void generate(int n);
         double* theList;
-        bool listExists;
+        bool listExists = false;
         int size;
         void printList();
         void reverseList(double arr[], int start, int end);

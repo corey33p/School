@@ -3,6 +3,7 @@ using namespace std;
 #include <time.h>
 #include <random>
 #include <fstream>
+#include <sstream>
 #include "Executive.h"
 #include "mergeSort.cpp"
 #include "quickSort.cpp"
@@ -10,26 +11,16 @@ using namespace std;
 #include "bubbleSort.cpp"
 #include "insertionSort.cpp"
 
-Executive::Executive(std::string fileName){
-    ifstream file(fileName);
-    if (!file.good()) {
-        cout<<"Bad filename."<<endl;
-        return;
-    }
-    std::string whichLab;
-    file >> whichLab;
-    int count;
-    file >> count;
-    std::string state;
-    file >> state;
-    std::string method;
-    file >> method;
-    double time = Executive::sort(count,state,method);
+Executive::Executive(std::string labNumber, std::string listSize, std::string initMethod,std::string sortType){
+    stringstream ss(listSize);
+    int count = 0;
+    ss >> count;
+    double time = Executive::sort(count,initMethod,sortType);
     cout<<"time: "<<time<<endl;
 }
 
 void Executive::generate(int n){
-    if (listExists){delete [] Executive::theList;}
+    if (Executive::listExists){delete [] Executive::theList;}
     Executive::size = n;
     Executive::theList = new double[n];
     //
@@ -65,14 +56,17 @@ Executive::~Executive(){
 double Executive::sort(int count,std::string state,std::string method){
     cout<<"Sorting n = "<<count<<"; "<<state<<"; "<<method<<endl;
     Executive::generate(count);
-    if (state=="robot"){ Executive::robotSort();};
+    if (state=="robot"){
+        Executive::robotSort();
+        return 0.0;
+    }
     if (state!="random"){
         // quickSort(Executive::theList,0,count-1);
         mergeSort(Executive::theList,count);
         // selectionSort(Executive::theList,count);
         // bubbleSort(Executive::theList,count);
         // insertionSort(Executive::theList,count);
-    } 
+    }
     if (state=="descending"){
         Executive::reverseList(Executive::theList,0,count-1);
     }
@@ -104,22 +98,21 @@ double Executive::sort(int count,std::string state,std::string method){
 }
 
 void Executive::reverseList(double arr[], int start, int end){
-    while (start < end) { 
-        double temp = arr[start];  
-        arr[start] = arr[end]; 
-        arr[end] = temp; 
-        start++; 
-        end--; 
-    }  
+    while (start < end) {
+        double temp = arr[start];
+        arr[start] = arr[end];
+        arr[end] = temp;
+        start++;
+        end--;
+    }
 }
 
 void Executive::robotSort(){
     std::string methods[5] = {"selection","insertion","bubble","merge","quick"};
     std::string states[3] = {"random","ascending","descending"};
     int testsPer = 11;
-    // int testsPer = 6;
-    int ranges[5][2] = {{50000,500000},{50000,500000},{50000,500000},{500000,100000000},{50000,500000}};
-    // int ranges[5][2] = {{50000,100000},{50000,100000},{50000,100000},{500000,10000000},{50000,100000}};
+    int ranges[5][2] = {{50000,500000},{50000,500000},{50000,500000},{500000,100000000},{500000,100000000}};
+    // int ranges[5][2] = {{50,500},{50,500},{50,500},{500,100000},{500,10000}};
     std::string output = "";
     int methodIndex = 0;
     for (auto & method : methods) {
