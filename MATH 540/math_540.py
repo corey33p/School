@@ -139,11 +139,21 @@ pr = find_primitive_root
 
 # determines if n is a quadratic residue mod m
 def quadratic_residue(n,m):
-    for i in range(1,int(m/2)+1):
+    for i in range(int(m/2)+2):
         if (i**2 % m) == n: return True
     return False
 
 qr = quadratic_residue
+
+# returns 1 if a is a quadratic residue mod b
+# returns -1 if a is a quadratic nonresidue mod b
+# returns 0 if a divides b
+def legendre(a,b):
+    while a <= 0: a+=b
+    if a == 1: return 1
+    if b%a==0: return 0
+    if quadratic_residue(a,b): return 1
+    else: return -1
 
 
 
