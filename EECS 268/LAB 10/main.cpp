@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Executive.h"
+#include "Pokemon.h"
 
 using namespace std;
 
@@ -8,6 +9,6 @@ int main(int argc, char** argv) {
 		cout << "Error, program requires 1 argument." << endl;
 		exit(1);
 	}
-    Executive exec(argv[1]);
+    Executive<Pokemon> exec(argv[1]);
     return(0);
 }

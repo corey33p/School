@@ -5,8 +5,8 @@ template<class ItemType>
 class BinaryNode {
     private:
         ItemType item;
-        BinaryNode<ItemType>* leftChildPtr;
-        BinaryNode<ItemType>* rightChildPtr;
+        BinaryNode<ItemType>* leftPtr = nullptr;
+        BinaryNode<ItemType>* rightPtr = nullptr;
     public:
         BinaryNode();
         BinaryNode(const ItemType& anItem);
@@ -16,12 +16,10 @@ class BinaryNode {
         void setItem(const ItemType& anItem);
         ItemType getItem() const;
         bool isLeaf() const;
-        BinaryNode<ItemType>* getLeftChildPtr() const;
-        BinaryNode<ItemType>* getRightChildPtr() const;
-        void setLeftChildPtr(BinaryNode<ItemType>* leftPtr);
-        void setRightChildPtr(BinaryNode<ItemType>* rightPtr);
+        BinaryNode<ItemType>* getLeft() const;
+        BinaryNode<ItemType>* getRight() const;
+        void setLeft(BinaryNode<ItemType>* leftPtr);
+        void setRight(BinaryNode<ItemType>* rightPtr);
 };
-
-#include "BinaryNode.cpp"
 
 #endif
