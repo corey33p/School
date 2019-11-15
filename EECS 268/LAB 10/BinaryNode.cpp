@@ -19,6 +19,20 @@ BinaryNode<Pokemon>::BinaryNode(const Pokemon& anItem,
 }
 
 template<class Pokemon>
+BinaryNode<Pokemon>::BinaryNode(const BinaryNode* node){
+    item = node->getItem();
+    if (node->getLeft() != nullptr){
+        leftPtr = new BinaryNode<Pokemon>(node->getLeft());
+    }
+    if (node->getRight() != nullptr){
+        rightPtr = new BinaryNode<Pokemon>(node->getRight());
+    }
+}
+
+template<class Pokemon>
+BinaryNode<Pokemon>::~BinaryNode(){}
+
+template<class Pokemon>
 void BinaryNode<Pokemon>::setItem(const Pokemon& anItem){
     item = anItem;
 }
@@ -30,7 +44,7 @@ Pokemon BinaryNode<Pokemon>::getItem() const{
 
 template<class Pokemon>
 bool BinaryNode<Pokemon>::isLeaf() const{
-    if ((leftPtr == nullptr) && (rightPtr == nullptr)){ 
+    if ((leftPtr == nullptr) && (rightPtr == nullptr)){
         return true;
     } else {
         return false;

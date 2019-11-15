@@ -1,0 +1,19 @@
+    BinaryNode<Pokemon>* rightPtr;
+    rightPtr = new BinaryNode<Pokemon>(b);
+    //
+    BinaryNode<Pokemon>* leftPtr;
+    leftPtr = new BinaryNode<Pokemon>(c);
+    //
+    BinaryNode<Pokemon>* rootPtr;
+    rootPtr = new BinaryNode<Pokemon>(a,leftPtr,rightPtr);
+    //
+    rightPtr=nullptr;
+    leftPtr=nullptr;
+    leftPtr = rootPtr->getLeft();
+    rightPtr = rootPtr->getRight();
+    //
+    leftPtr->getItem().print();
+    rootPtr->getItem().print();
+    rightPtr->getItem().print();
+    delete rootPtr;
+    rootPtr = nullptr;

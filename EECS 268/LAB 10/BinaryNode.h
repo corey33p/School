@@ -13,6 +13,8 @@ class BinaryNode {
         BinaryNode(const ItemType& anItem,
                   BinaryNode<ItemType>* leftPtr,
                   BinaryNode<ItemType>* rightPtr);
+        BinaryNode(const BinaryNode* node);
+        ~BinaryNode();
         void setItem(const ItemType& anItem);
         ItemType getItem() const;
         bool isLeaf() const;

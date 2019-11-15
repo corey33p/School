@@ -38,7 +38,7 @@ class BinarySearchTree {
         //
         void setEntry(const KeyType& aKey, const ItemType& item) const/* throw(NotFoundException, InvalidSetEntryRequest) */;
         bool contains(const KeyType& aKey) const;
-        void clear();
+        void clear(BinaryNode<ItemType>* treePtr);
         void preorderTraverse(void visit(ItemType&)) const;
         void inorderTraverse(void visit(ItemType&)) const;
         void postorderTraverse(void visit(ItemType&)) const;

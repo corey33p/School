@@ -16,7 +16,10 @@ class Pokemon{
         Pokemon(std::string a_name,std::string j_name,int pokedexNumber);
         ~Pokemon();
         void print();
-        int getPNum();
+        int getPNum() const;
+        std::string getAName() const;
+        std::string getJName() const;
+        //
         bool operator>(const int& pNum){
             if (pNum < Pokemon::pokedexNumber){ return true; }
             else { return false; }
@@ -32,5 +35,3 @@ class Pokemon{
 };
 
 #endif
-
-
