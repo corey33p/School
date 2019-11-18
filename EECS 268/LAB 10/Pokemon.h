@@ -28,7 +28,7 @@ class Pokemon{
             if (pNum > Pokemon::pokedexNumber){ return true; }
             else { return false; }
         }
-        bool operator=(const int& pNum){
+        bool operator==(const int& pNum){
             if (pNum == Pokemon::pokedexNumber){ return true; }
             else { return false; }
         }

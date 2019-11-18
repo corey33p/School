@@ -63,19 +63,11 @@ BinaryNode<Pokemon>* BinaryNode<Pokemon>::getRight() const{
 
 template<class Pokemon>
 void BinaryNode<Pokemon>::setLeft(BinaryNode<Pokemon>* newLeft){
-    if (leftPtr != nullptr){
-        delete leftPtr;
-        leftPtr = nullptr;
-    }
     leftPtr = newLeft;
 }
 
 template<class Pokemon>
 void BinaryNode<Pokemon>::setRight(BinaryNode<Pokemon>* newRight){
-    if (rightPtr != nullptr){
-        delete rightPtr;
-        rightPtr = nullptr;
-    }
     rightPtr = newRight;
 }
 

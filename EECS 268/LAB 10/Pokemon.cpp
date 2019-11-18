@@ -4,9 +4,9 @@
 Pokemon::Pokemon(){}
 
 Pokemon::Pokemon(const Pokemon &p2){
-    a_name = p2.getAName();
-    j_name = p2.getJName();
-    pokedexNumber = p2.getPNum();
+    a_name = p2.a_name;
+    j_name = p2.j_name;
+    pokedexNumber = p2.pokedexNumber;
 }
 
 Pokemon::Pokemon(std::string _a_name,std::string _j_name,int _pokedexNumber){

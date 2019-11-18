@@ -8,13 +8,13 @@
 template<class KeyType, class ItemType>
 class BinarySearchTree {
     private:
-       BinaryNode<ItemType>* rootPtr = nullptr;
+        BinaryNode<ItemType>* rootPtr = nullptr;
     protected:
+        BinaryNode<ItemType>* copyTree(const BinaryNode<ItemType>* treePtr) const;
         BinaryNode<ItemType>* insertInorder(BinaryNode<ItemType>* subTreePtr,
                                             BinaryNode<ItemType>* newNode);
         BinaryNode<ItemType>* removeValue(BinaryNode<ItemType>* subTreePtr,
-                                          KeyType aKey,
-                                          bool& success);
+                                          KeyType aKey);
         BinaryNode<ItemType>* removeNode(BinaryNode<ItemType>* nodePtr);
         BinaryNode<ItemType>* removeLeftmostNode(BinaryNode<ItemType>* subTreePtr,
                                                  ItemType& inorderSuccessor);
