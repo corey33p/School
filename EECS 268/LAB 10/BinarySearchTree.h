@@ -16,8 +16,10 @@ class BinarySearchTree {
         BinaryNode<ItemType>* removeValue(BinaryNode<ItemType>* subTreePtr,
                                           KeyType aKey);
         BinaryNode<ItemType>* removeNode(BinaryNode<ItemType>* nodePtr);
-        BinaryNode<ItemType>* removeLeftmostNode(BinaryNode<ItemType>* subTreePtr,
-                                                 ItemType& inorderSuccessor);
+        // BinaryNode<ItemType>* removeLeftmostNode(BinaryNode<ItemType>* subTreePtr,
+        //                                          ItemType& inorderSuccessor);
+        void getLeftmostItem(BinaryNode<ItemType>* subTreePtr,
+                                      ItemType& inorderSuccessor);
         BinaryNode<ItemType>* findNode(BinaryNode<ItemType>* treePtr,KeyType aKey) const;
         //
         void preorder(void visit(ItemType&), BinaryNode<ItemType>* treePtr) const;

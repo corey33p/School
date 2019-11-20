@@ -52,7 +52,7 @@ void BinarySearchTree<key,Pokemon>::add(const Pokemon& newEntry){
 template<class key, class Pokemon>
 void BinarySearchTree<key,Pokemon>::remove(const key& aKey) {
     if (!contains(aKey)){ throw std::runtime_error("Item not in tree."); }
-    else { removeValue(rootPtr,aKey); }
+    else { rootPtr = removeValue(rootPtr,aKey); }
 }
 
 template<class key, class Pokemon>
@@ -158,27 +158,25 @@ BinaryNode<Pokemon>* BinarySearchTree<key,Pokemon>::removeValue(BinaryNode<Pokem
 
 template<class key, class Pokemon>
 BinaryNode<Pokemon>* BinarySearchTree<key,Pokemon>::removeNode(BinaryNode<Pokemon>* nodePtr){
-    if (nodePtr->isLeaf()){
-        cout<<"check1"<<endl;
+    if ((nodePtr->getLeft() == nullptr) && (nodePtr->getRight() == nullptr)){
         delete nodePtr;
         nodePtr = nullptr;
         return nodePtr;
-    } else if (nodePtr->getLeft() == nullptr || nodePtr->getRight() == nullptr){
-        cout<<"check2"<<endl;
-        BinaryNode<Pokemon>* newNode;
-        newNode = nodePtr->getLeft();
-        if (newNode == nullptr) { // if left child is empty
-            cout<<"check2.5"<<endl;
-            newNode = nodePtr->getRight();
-        }
+    } else if (nodePtr->getLeft() == nullptr){
+        BinaryNode<Pokemon>* newNode = nodePtr->getRight();
+        delete nodePtr;
+        nodePtr = nullptr;
+        return newNode;
+    } else if (nodePtr->getRight() == nullptr){
+        BinaryNode<Pokemon>* newNode = nodePtr->getLeft();
         delete nodePtr;
         nodePtr = nullptr;
         return newNode;
     } else {
-        cout<<"check3"<<endl;
         Pokemon pokemon;
-        BinaryNode<Pokemon>* newNode = removeLeftmostNode(nodePtr->getRight(),pokemon);
-        // newNode->getRight()->setRight();
+        // BinaryNode<Pokemon>* newNode = removeLeftmostNode(nodePtr->getRight(),pokemon);
+        getLeftmostItem(nodePtr->getRight(),pokemon);
+        BinaryNode<Pokemon>* newNode = removeValue(nodePtr->getRight(),pokemon.getPNum());
         nodePtr->setRight(newNode);
         nodePtr->setItem(pokemon);
         return nodePtr;
@@ -186,15 +184,26 @@ BinaryNode<Pokemon>* BinarySearchTree<key,Pokemon>::removeNode(BinaryNode<Pokemo
 }
 
 template<class key, class Pokemon>
-BinaryNode<Pokemon>* BinarySearchTree<key,Pokemon>::removeLeftmostNode(BinaryNode<Pokemon>* subTreePtr,
+void BinarySearchTree<key,Pokemon>::getLeftmostItem(BinaryNode<Pokemon>* subTreePtr,
                                         Pokemon& inorderSuccessor){
     if (subTreePtr->getLeft() == nullptr){
         inorderSuccessor = subTreePtr->getItem();
-        return removeNode(subTreePtr);
     } else {
-        return removeLeftmostNode(subTreePtr->getLeft(),inorderSuccessor);
+        getLeftmostItem(subTreePtr->getLeft(),inorderSuccessor);
     }
 }
+
+// template<class key, class Pokemon>
+// BinaryNode<Pokemon>* BinarySearchTree<key,Pokemon>::removeLeftmostNode(BinaryNode<Pokemon>* subTreePtr,
+//                                         Pokemon& inorderSuccessor){
+//     if (subTreePtr->getLeft() == nullptr){
+//         inorderSuccessor = subTreePtr->getItem();
+//         return removeNode(subTreePtr);
+//     } else {
+//         removeLeftmostNode(subTreePtr->getLeft(),inorderSuccessor);
+//         return subTreePtr;
+//     }
+// }
 
 template<class key, class Pokemon>
 BinaryNode<Pokemon>* BinarySearchTree<key,Pokemon>::findNode(BinaryNode<Pokemon>* treePtr,

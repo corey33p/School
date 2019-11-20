@@ -51,6 +51,12 @@ Executive<Pokemon>::Executive(std::string fileName){
             <<"6) quit\n"
             <<"---> ";
        cin>>command;
+       while (!cin) {
+           cin.clear();
+           while (cin.get() != '\n') { continue; }
+           cout<<"Invalid command.\n---> ";
+           cin>>command;
+       }
        if (command == 1){
            string aName;
            string jName;
@@ -203,6 +209,12 @@ Executive<Pokemon>::Executive(std::string fileName){
            int pNum;
            cout<<"Pokedex number to delete: ";
            cin>> pNum;
+           while (!cin) {
+               cin.clear();
+               while (cin.get() != '\n') { continue; }
+               cout<<"Invalid input. Enter Pokedex number: ";
+               cin>>pNum;
+           }
            if (copyExists){
                int treeChoice;
                cout<<"Remove from copy or main?\n"
