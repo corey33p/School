@@ -1,3 +1,12 @@
+/*
+@author - Corey Anderson
+@file - main.cpp
+@date - 11/20/2019
+@brief - Program will use a binare search tree to store and manage pokedex entries.
+*/
+
+
+
 #include <iostream>
 #include "Executive.h"
 #include "Pokemon.h"

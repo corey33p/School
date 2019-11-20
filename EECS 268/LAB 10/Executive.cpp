@@ -1,3 +1,20 @@
+/*
+@author - Corey Anderson
+@file - Executive.cpp
+@date - 11/20/2019
+@brief - Will read in a tab separated text file of pokedex entries and
+add them to the binary search tree. Then will enter a menu allowing the user
+to interact with the pokedex in various ways, including
+
+1) adding pokedex entry
+2) search the tree for an existing pokemon,
+3) printing  the pokedex tree with inorder, preorder or postorder traversal method
+4) make one deep copy of the pokedex and perform all future operations
+   on either the copy or the main tree
+5) removing an existing pokedex entry
+6) exit the program
+*/
+
 using namespace std;
 #include <iostream>
 #include <string>
@@ -33,7 +50,12 @@ Executive<Pokemon>::Executive(std::string fileName){
             tree = new BinarySearchTree<int,Pokemon>(pokemon);
             rootMade = true;
         }
-        else { tree->add(pokemon); }
+        else {
+            try {tree->add(pokemon); }
+            catch (std::runtime_error){
+                cout<<"Error: Pokedex number "<<pokemon.getPNum()<<" already exists."<<endl;
+            }
+        }
     }
     //                 //
     // menu operations //
@@ -81,26 +103,26 @@ Executive<Pokemon>::Executive(std::string fileName){
                    <<"---> ";
                cin>>treeChoice;
                if (treeChoice == 1){
+                   Pokemon pokemon = Pokemon(aName,jName,pNum);
                    try{
-                       Pokemon pokemon = Pokemon(aName,jName,pNum);
                        tree->add(pokemon);
                    } catch (std::runtime_error){
-                       cout<<"Error: Pokedex number already exists."<<endl;
+                       cout<<"Error: Pokedex number "<<pokemon.getPNum()<<" already exists."<<endl;
                    }
                } else if (treeChoice == 2){
+                   Pokemon pokemon = Pokemon(aName,jName,pNum);
                    try{
-                       Pokemon pokemon = Pokemon(aName,jName,pNum);
                        copy->add(pokemon);
                    } catch (std::runtime_error){
-                       cout<<"Error: Pokedex number already exists."<<endl;
+                       cout<<"Error: Pokedex number "<<pokemon.getPNum()<<" already exists."<<endl;
                    }
                } else { cout<<"Bad tree choice.";}
            } else {
+               Pokemon pokemon = Pokemon(aName,jName,pNum);
                try {
-                   Pokemon pokemon = Pokemon(aName,jName,pNum);
                    tree->add(pokemon);
                } catch (std::runtime_error){
-                   cout<<"Error: Pokedex number already exists."<<endl;
+                   cout<<"Error: Pokedex number "<<pokemon.getPNum()<<" already exists."<<endl;
                }
            }
        } else if (command == 2){
