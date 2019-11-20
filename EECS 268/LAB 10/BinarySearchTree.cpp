@@ -66,10 +66,6 @@ Pokemon BinarySearchTree<key,Pokemon>::getEntry(const key& aKey) const {
 }
 
 template<class key, class Pokemon>
-void BinarySearchTree<key,Pokemon>::setEntry(const key& aKey, const Pokemon& item) const
-    /* throw(NotFoundException, InvalidSetEntryRequest) */{}
-
-template<class key, class Pokemon>
 bool BinarySearchTree<key,Pokemon>::contains(const key& aKey) const{
     BinaryNode<Pokemon>* node;
     node = findNode(rootPtr,aKey);
@@ -103,7 +99,6 @@ void BinarySearchTree<key,Pokemon>::postorderTraverse(void visit(Pokemon&)) cons
 
 template<class key, class Pokemon>
 BinarySearchTree<key,Pokemon>& BinarySearchTree<key,Pokemon>::operator=(const BinarySearchTree<key,Pokemon>& rightHandSide){
-    cout<<"HERE"<<endl;
     clear(rootPtr);
 	rootPtr = this->copyTree(rightHandSide.rootPtr);
 	return *this;

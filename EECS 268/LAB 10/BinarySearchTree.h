@@ -76,25 +76,80 @@ class BinarySearchTree {
         // return:
         BinarySearchTree(const ItemType& rootItem);
         
-        // precondition:
-        // postcondition:
-        // return: BinaryNode<ItemType>* leftPtr
+        // precondition: receives an already existing Binary Search Tree
+        // postcondition: creates a deep copy of a BST by copyTree(...)
+        // return:
         BinarySearchTree(const BinarySearchTree& tree);
+        
+        // precondition:
+        // postcondition: BST will be deleted
+        // return:
         virtual ~BinarySearchTree();
         //
+        // precondition:
+        // postcondition: will be evaluated whether the BST is empty
+        // return: True if headptr null, false if headptr not null
         bool isEmpty() const;
+        
+        // precondition:
+        // postcondition: height of BST will be evaluated
+        // return: int; height of BST
         int getHeight() const;
+        
+        // precondition:
+        // postcondition: number of nodes in the BST will be evaluated
+        // return: int; number of nodes
         int getNumberOfNodes() const;
+        
+        // precondition: neceives reference to ItemType object to be inserted
+        //               in the new node
+        // postcondition: node created, placed in tree, ItemType object added to node
+        // return:
         void add(const ItemType& newEntry);
-        void remove(const KeyType& aKey) /* throw(NotFoundException) */;
+        
+        // precondition: KeyType of node to be deleted will be received
+        // postcondition: node to be deleted will be deleted if it exists
+        //                exception will be thrown otherwise
+        // return:
+        void remove(const KeyType& aKey);
+        
+        // precondition: KeyType of the node to be retrieved will be received
+        // postcondition:
+        // return: ItemType; ItemType object matching key
         ItemType getEntry(const KeyType& aKey) const /* throw(NotFoundException) */;
         //
-        void setEntry(const KeyType& aKey, const ItemType& item) const/* throw(NotFoundException, InvalidSetEntryRequest) */;
+        
+        // precondition: KeyType key of node to be searched for will be received
+        // postcondition:
+        // return: bool; true iff ItemType matching node is found in truee
         bool contains(const KeyType& aKey) const;
+        
+        // precondition: receive a pointer to a BST to be cleared
+        // postcondition: BST will be cleared at and below received pointer
+        // return: BinaryNode<ItemType>* leftPtr
         void clear(BinaryNode<ItemType>* treePtr);
+        
+        // precondition: visit function received defining behaviour during traversal
+        // postcondition: BST will be traversed in preorder fashion, executing the
+        //                visit function at each step
+        // return:
         void preorderTraverse(void visit(ItemType&)) const;
+        
+        // precondition: visit function received defining behaviour during traversal
+        // postcondition: BST will be traversed in inorder fashion, executing the
+        //                visit function at each step
+        // return:
         void inorderTraverse(void visit(ItemType&)) const;
+        
+        // precondition: visit function received defining behaviour during traversal
+        // postcondition: BST will be traversed in postorder fashion, executing the
+        //                visit function at each step
+        // return:
         void postorderTraverse(void visit(ItemType&)) const;
+        
+        // precondition: RHS of = operator will be received, which is another BST
+        // postcondition: BST will be cleared and copied, matching RHS of = operator
+        // return: copy of the BST on the right side of the = operator
         BinarySearchTree& operator=(const BinarySearchTree& rightHandSide);
 };
 
