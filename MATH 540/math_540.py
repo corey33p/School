@@ -78,6 +78,8 @@ def modular_inverse(n,m):
             return i
     print("no solution")
 
+mi = modular_inverse
+
 # prints a table of the phi function values
 def phi_seq(n=-1):
     i = 1
@@ -137,6 +139,12 @@ def find_primitive_root(n,to_print=True):
 
 pr = find_primitive_root
 
+# determines if a is a primitive root of n
+def is_primitive_root(a,n):
+    return modular_order(a,n,False)==n-1
+
+ipr = is_primitive_root
+
 # determines if n is a quadratic residue mod m
 def quadratic_residue(n,m):
     for i in range(int(m/2)+2):
@@ -155,6 +163,36 @@ def legendre(a,b):
     if quadratic_residue(a,b): return 1
     else: return -1
 
+def sum_of_squares(num):
+    debug = False
+    max = int(num**.5)
+    max_number_of_components = 6
+    squares = [(i+1)**2 for i in range(max)]
+    squares.reverse()
+    solutions = set()
+    for i, starting_square in enumerate(squares):
+        current_sum = starting_square
+        current_components = [int(starting_square**.5)]
+        number_of_components = 1
+        working_squares = squares[i:]
+        over_limit = False
+        if current_sum == num: solutions.add(tuple(current_components))
+        for square in working_squares:
+            while ((current_sum + square) <= num) and not over_limit:
+                current_sum += square
+                if debug: print("current_sum: " + str(current_sum))
+                current_components.append(int(square**.5))
+                if debug: print("current_components: " + str(current_components))
+                number_of_components += 1
+                if (number_of_components >= max_number_of_components): over_limit = True
+                if current_sum == num: solutions.add(tuple(current_components))
+    if solutions: 
+        solutions = list(solutions)
+        solutions.sort(key=len)
+        for solution in solutions: print(solution)
+    else: print("No solutions found.")
+
+ss = sum_of_squares
 
 
 
