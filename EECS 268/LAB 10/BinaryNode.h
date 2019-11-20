@@ -3,7 +3,7 @@
 @file - BinaryNode.h
 @date - 11/20/2019
 @brief - Will implement BinaryNode objects which will be used in the construction
-of the binary search tree.
+of the tree structure.
 */
 
 #ifndef _BINARY_NODE
@@ -49,11 +49,35 @@ class BinaryNode {
         // postcondition: Node created with null children.
         // return: none
         void setItem(const ItemType& anItem);
+        
+        // precondition: ItemType object will exist in the node.
+        // postcondition:
+        // return: ItemType object contained in the node.
         ItemType getItem() const;
+        
+        // precondition:
+        // postcondition:
+        // return: True if and only if child pointers are both null
         bool isLeaf() const;
+        
+        // precondition:
+        // postcondition:
+        // return: BinaryNode<ItemType>* leftPtr
         BinaryNode<ItemType>* getLeft() const;
+        
+        // precondition:
+        // postcondition:
+        // return: BinaryNode<ItemType>* rightPtr
         BinaryNode<ItemType>* getRight() const;
+        
+        // precondition: new leftPtr will be received
+        // postcondition: leftPtr will be updated
+        // return:
         void setLeft(BinaryNode<ItemType>* leftPtr);
+        
+        // precondition: new rightPtr will be received
+        // postcondition: rightPtr will be updated
+        // return:
         void setRight(BinaryNode<ItemType>* rightPtr);
 };
 

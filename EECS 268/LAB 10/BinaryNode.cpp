@@ -1,3 +1,11 @@
+/*
+@author - Corey Anderson
+@file - BinaryNode.cpp
+@date - 11/20/2019
+@brief - Will implement BinaryNode objects which will be used in the construction
+of the tree structure.
+*/
+
 #include "BinaryNode.h"
 #include "Pokemon.h"
 
@@ -33,42 +41,27 @@ template<class Pokemon>
 BinaryNode<Pokemon>::~BinaryNode(){}
 
 template<class Pokemon>
-void BinaryNode<Pokemon>::setItem(const Pokemon& anItem){
-    item = anItem;
-}
+void BinaryNode<Pokemon>::setItem(const Pokemon& anItem){item = anItem;}
 
 template<class Pokemon>
-Pokemon BinaryNode<Pokemon>::getItem() const{
-    return item;
-}
+Pokemon BinaryNode<Pokemon>::getItem() const{return item;}
 
 template<class Pokemon>
 bool BinaryNode<Pokemon>::isLeaf() const{
-    if ((leftPtr == nullptr) && (rightPtr == nullptr)){
-        return true;
-    } else {
-        return false;
-    }
+    if ((leftPtr == nullptr) && (rightPtr == nullptr)){return true;}
+    else {return false;}
 }
 
 template<class Pokemon>
-BinaryNode<Pokemon>* BinaryNode<Pokemon>::getLeft() const{
-    return leftPtr;
-}
+BinaryNode<Pokemon>* BinaryNode<Pokemon>::getLeft() const{ return leftPtr;}
 
 template<class Pokemon>
-BinaryNode<Pokemon>* BinaryNode<Pokemon>::getRight() const{
-    return rightPtr;
-}
+BinaryNode<Pokemon>* BinaryNode<Pokemon>::getRight() const{return rightPtr;}
 
 template<class Pokemon>
-void BinaryNode<Pokemon>::setLeft(BinaryNode<Pokemon>* newLeft){
-    leftPtr = newLeft;
-}
+void BinaryNode<Pokemon>::setLeft(BinaryNode<Pokemon>* newLeft){leftPtr = newLeft;}
 
 template<class Pokemon>
-void BinaryNode<Pokemon>::setRight(BinaryNode<Pokemon>* newRight){
-    rightPtr = newRight;
-}
+void BinaryNode<Pokemon>::setRight(BinaryNode<Pokemon>* newRight){rightPtr = newRight;}
 
 template class BinaryNode<Pokemon>;
