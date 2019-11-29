@@ -1,3 +1,10 @@
+/*
+@author - Corey Anderson
+@file - main.cpp
+@date - 11/29/2019
+@brief - Will manage a priority queue of service requests to fix power stations.
+*/
+
 #include <iostream>
 #include "Executive.h"
 #include "Heap.h"
