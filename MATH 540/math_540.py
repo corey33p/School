@@ -194,7 +194,35 @@ def sum_of_squares(num):
 
 ss = sum_of_squares
 
+# evaluates a continued fraction from the notation [a,b,c,...,n]
+# where the result is a+a/(b+1/(c+1/...+(1/n)...))
+def cf_fromlist(theList,num=None,den=None,_print=True):
+    if theList == []:
+        print(str(den) + " / " + str(num))
+        return den, num
+    else:
+        last_in_list = theList.pop(len(theList)-1)
+        if (num is None) and (den is None):
+            num = 1
+            den = last_in_list
+        else:
+            num = den * last_in_list + num
+            num, den = den, num
+        den,num = cf_fromlist(theList,num,den,_print)
+        return den,num
 
+cf = cf_fromlist
 
+# takes a rational number and returns the continued fraction representation
+# in the form [a,b,c,...,n] explained above
+def rn_to_cf(num,den):
+    theList = []
+    while den != 0:
+        theList.append(num//den)
+        oldDen = den
+        den = num % den
+        num = oldDen
+    return theList
 
+rn = rn_to_cf
 
