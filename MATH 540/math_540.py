@@ -146,6 +146,8 @@ def is_primitive_root(a,n):
 ipr = is_primitive_root
 
 # determines if n is a quadratic residue mod m
+# that is, there exists a k such that 
+# n^k is congruent to 1 mod m
 def quadratic_residue(n,m):
     for i in range(int(m/2)+2):
         if (i**2 % m) == n: return True
