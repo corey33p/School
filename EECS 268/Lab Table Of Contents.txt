@@ -1,0 +1,23 @@
+EECS 268 LAB TABLE OF CONTENTS
+
+LAB 1) Stores a vector of player objects and performs various manipulations on the players
+
+LAB 2) Uses a Map (similar to python dict) to implement employee management system where employee ID's are mapped to employee objects
+
+LAB 3) Implements class hierarchies to keep track of a list of various shapes read from a file.
+
+LAB 4) Implements a templated linked list to keep track of Student objects and Shape objects (previous lab)
+
+LAB 5) Uses stacks and queues to process various commands read from a file.
+
+LAB 6) A matrix class with a recursive function for evaluating the determinant of the matrix.
+
+LAB 7) Uses a recursive function to solve the following puzzle: You are in a tank traveling up, down, left, right and diagonally through electric fields. If you travel through two minus signs in a row, your battery is drained and you are stuck. If you travel through two plus signs in a row, your battery overcharges and explodes. How can you travel from start (S) to end (E) through every cell once and survive?
+
+LAB 8) Uses recursive function to show the spead of "the blob" which can travel along city streets and transport instantly through city sewers. May of the city is loaded from a file which gives the starting position of the blob.
+
+LAB 9) Reports on the performance of the following sorting algorithms: insertionSort, mergeSort, quickSort, selectionSort, and bubbleSort
+
+LAB 10) Implements a Binary Search Tree to keep track of pokemon, which can be sorted by their Pokedex values
+
+LAB 11) Implements a priority queue to manage service requests to fix power stations.
