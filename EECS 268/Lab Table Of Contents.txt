@@ -20,4 +20,4 @@ LAB 9) Reports on the performance of the following sorting algorithms: insertion
 
 LAB 10) Implements a Binary Search Tree to keep track of pokemon, which can be sorted by their Pokedex values
 
-LAB 11) Implements a priority queue to manage service requests to fix power stations.
+LAB 11) Implements a priority queue via a max heap to manage service requests to fix power stations.
